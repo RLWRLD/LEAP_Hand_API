@@ -11,6 +11,21 @@
 - We offically support Python and ROS, but other languages are supported by [Dynamixel SDK](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/).
 - To improve latency on Ubuntu try these tips.   Configure [USB Latency Settings in Ubuntu](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_wizard2/) and the [Dynamixel Python SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK/issues/288) and set the Return Delay Time  (Control Table Register 9 in Dynamixel Wizard) from 250 µs to 0 µs.
 
+##### NUC3 settings
+* dynamixel port: `ttyUSB0` (USB - Serial converter) --> `/dev/ttyUSB0`
+* the hand ID:
+```
+kywch@nuc3:~/workspace$ ls -al /dev/serial/by-id/
+total 0
+drwxr-xr-x 2 root root 60  7월 18 14:03 .
+drwxr-xr-x 4 root root 80  7월 18 14:03 ..
+lrwxrwxrwx 1 root root 13  7월 18 14:03 usb-FTDI_USB__-__Serial_Converter_FTAA07JM-if00-port0 -> ../../ttyUSB0
+```
+* Set the `the Return Delay Time` to 0 in Dynamixel Wizard. 
+* Set the dynamixel_sdk latency, following https://github.com/ROBOTIS-GIT/DynamixelSDK/issues/288
+  * (NUC3) In `.venv/lib/python3.10/site-packages/dynamixel_sdk/port_handler.py`, find `LATENCY_TIMER = 16` and set it to 1
+
+
 #### Functionality
 - Leap Node allows you to command joint angles in different scalings.
 - You can read position, velocity and current from the hand.  
